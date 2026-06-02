@@ -13,6 +13,8 @@
 <hr></hr>
 💡 ก่อนอื่นเราต้องเข้าไปที่หน้า bios ของเครื่องก่อนนะครับ (วิธีเข้า bios ของโน้ตบุ๊คแต่ละยี่ห้อก็จะแตกต่างกันออกไป ถ้าใครไม่ทราบลองพิมพ์ยี่ห้อโน้ตบุ๊คของตัวเอง + วิธีการเข้า bios ดูนะครับ) พอเข้ามาในหน้า bios แล้ว ให้ไปปิด secure boot และตั้งค่าให้ทำการ boot ผ่าน usb ที่เราเตรียมไว้นะครับ
 <p></p>
+<img width="612" height="332" alt="image" src="https://github.com/user-attachments/assets/30313ba2-ae1a-4b36-8c02-fab622b126c3" />
+<p></p>
 หลังจากที่เรา boot bootable usb ที่เราเตรียมไว้แล้ว ขั้นตอนนี้ถ้าใครที่ใช้สาย lan เชื่อมต่ออินเทอร์เน็ตอยู่ สามารถข้ามขั้นตอนนี้ไปได้เลย แต่ถ้าใครที่ต้องเชื่อมต่อ wifi เราต้องเริ่มพิมพ์คำสั่งกันก่อนนะครับ โดยเริ่มด้วย...
 <pre>iwctl</pre>
 ตามด้วยคำสั่ง
@@ -32,11 +34,37 @@
 <pre>pacman -Sy</pre>
 เมื่อทุกอย่างเรียบร้อยแล้ว ก็ถึงเวลาที่รอคอย พิมพ์คำสั่งต่อไปนี้ เพื่อเตรียมติดตั้ง <b>Arch Linux</b>
 <pre>archinstall</pre>
+<p></p>
+หลังจากพิมพ์คำสั่ง <code>archinstall</code> แล้ว จะเริ่มเข้าสู่หน้าจอการ config ค่าต่าง ๆ ก่อนที่จะเริ่มทำการติดตั้ง ส่วนมีค่าไหนที่น่าสนใจบ้าง มาดูไปพร้อม ๆ กันนะครับ
+<p></p>
+<img width="678" height="478" alt="image" src="https://github.com/user-attachments/assets/83fc4da4-d33c-4a01-a0c0-28325a7d2480" />
+<p></p>
+เริ่มกันที่หัวข้อแรก <b>Archinstall language</b> ซึ่งอันนี้ก็คือการเลือกภาษาสำหรับติดตั้ง ส่วนตัวผมเลือกเป็น English 100% นะครับ แต่ถ้าใครอยากลองภาษาอื่น ๆ สามารถเลือกตั้งค่ากันได้เลย
+<p></p>
+ต่อมาหัวข้อ <b>Locales</b> อันนี้ส่วนตัวเลือกตาม default ที่ระบบตั้งไว้เลยนะครับ จะเป็นเรื่องของพวกเลย์เอาท์ภาษาของคีย์บอร์ด, ภาษาหลักของเครื่อง และการ encoding ภาษาอื่น
+<p></p>
+หัวข้อต่อมา คือ <b>Mirrors</b> โดยหัวข้อนี้เราสามารถเลือกโลเคชั่นที่ใกล้เคียงกับที่อยู่ปัจจุบันมากที่สุด เพื่อให้การดาวน์โหลด หรืออัปเดตต่าง ๆ ได้อย่างรวดเร็วมากที่สุด
+<p></p>
+<hr></hr>
 
+draft
+1. ติดตั้งโปรแกรมจัดการแพ็คเกจเสริม (AUR Helper)
+<pre>sudo pacman -S --needed base-devel git</pre>
+<pre>git clone https://aur.archlinux.org/yay.git</pre>
+<pre>cd yay</pre>
+<pre>makepkg -si</pre>
+<p></p>
+2. จัดการเรื่อง Codecs และฟอนต์ภาษาไทย
+<pre>sudo pacman -S alsa-utils pipewire-alsa pipewire-pulse gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-plugins-base libdvdcss</pre>
+<pre>sudo pacman -S ttf-liberation ttf-dejavu noto-fonts-cjk
+yay -S ttf-thaifonts-core</pre>
+<p></p>
+3. เพิ่มความปลอดภัยด้วย Firewall
+<pre>sudo pacman -S ufw
+sudo systemctl enable --now ufw
+sudo ufw enable</pre>
 
-
-
-
+<hr></hr>
 draft
 หากอยากให้ Konsole ทุกอันแสดงรายละเอียดเครื่องเหมือนกันทั้งหมด สามารถทำได้ง่ายๆ ดังนี้ครับ:ขั้นตอนการตั้งค่าให้แสดงรายละเอียดเครื่องเปิด Konsole ขึ้นมาติดตั้งโปรแกรมแสดงรายละเอียด (เช่น fastfetch ซึ่งเป็นที่นิยมในปัจจุบัน)
 Ubuntu/Debian: sudo apt install fastfetch
@@ -44,6 +72,6 @@ Fedora: sudo dnf install fastfetch
 Arch Linux: sudo pacman -S fastfetch
 เปิดไฟล์ตั้งค่า Shell ของคุณด้วยโปรแกรมแก้ไขข้อความ เช่น nano ~/.bashrc หรือ nano ~/.zshrc
 เลื่อนไปที่บรรทัดล่างสุด แล้วพิมพ์คำสั่ง fastfetch ลงไปกด Ctrl + O แล้วกด Enter เพื่อบันทึก จากนั้นกด Ctrl + X เพื่อปิดโปรแกรมลองปิด-เปิดหน้าต่าง Konsole ใหม่ จะมีรายละเอียดเครื่องแสดงขึ้นมาแล้ว
-
+<hr></hr>
 draft
 1. ตั้งค่า Pacman และเปิดใช้งาน ILoveCandyไฟล์ /etc/pacman.conf เป็นหัวใจสำคัญในการจัดการแพ็กเกจเปิดไฟล์ด้วย Text Editor: sudo nano /etc/pacman.confเลื่อนหาบรรทัด #Color แล้วลบ # ออกเพื่อให้แสดงสีสันสวยงามในเทอร์มินัลใต้หัวข้อ [options] ให้พิมพ์ ILoveCandy เพิ่มลงไป เพื่อเปลี่ยนอนิเมชั่นแถบดาวน์โหลด (Progress bar) ให้เป็นรูป Pacman กินลูกกวาดหากต้องการโหลดแพ็กเกจได้เร็วขึ้น ให้ลบ # หน้าคำว่า ParallelDownloads = 5 (สามารถปรับตัวเลขให้ดาวน์โหลดพร้อมกันมากขึ้นได้)กด Ctrl + O แล้วกด Enter เพื่อบันทึก จากนั้นกด Ctrl + X เพื่อออก
